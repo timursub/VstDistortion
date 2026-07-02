@@ -17,8 +17,8 @@ juce_add_plugin(AudioPlugin
     JUCE_VST3_CAN_REPLACE_VST2_FALSE
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE
     COPY_PLUGIN_AFTER_BUILD TRUE # Automatically places the plugin in your Mac's system folders
-    PLUGIN_MANUFACTURER_CODE "Abcd"
-    PLUGIN_CODE "Efgh"
+    PLUGIN_MANUFACTURER_CODE "Tmsb"
+    PLUGIN_CODE "Vlkn"
     FORMATS VST3 AU Standalone)
 
 # 4. Tell CMake to use your specific uploaded files

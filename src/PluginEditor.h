@@ -22,6 +22,7 @@ private:
     AudioPluginAudioProcessor& audioProcessor;
 
     juce::Slider volumeSlider;
+    juce::Slider masterSlider;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (AudioPluginAudioProcessorEditor)
 };

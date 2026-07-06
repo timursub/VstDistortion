@@ -42,7 +42,9 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    float Volume = 0.5f;
+    float masterVolume = 0.5f;
+    float DriveAmount = 3.0f;
+    float DriveCeiling = 1.0f;
 
 private:
     //==============================================================================

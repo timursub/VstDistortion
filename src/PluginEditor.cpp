@@ -6,23 +6,20 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     : AudioProcessorEditor (&p), audioProcessor (p)
 {
     volumeSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
-    
-    // 2. Hide the raw number text box under it to keep it clean
     volumeSlider.setTextBoxStyle (juce::Slider::NoTextBox, false, 0, 0);
-    
-    // 3. Match our 0.0 to 1.0 audio volume limits
-    volumeSlider.setRange (0.0f, 1.0f, 0.01f);
-    
-    // 4. Set the initial knob position to match the brain's current volume (0.5f)
-    volumeSlider.setValue (audioProcessor.Volume);
-
-    // 5. Tell the knob to report to this file when a user drags it
+    volumeSlider.setRange (0.5f, 20.0f, 0.01f);
+    volumeSlider.setValue (audioProcessor.DriveAmount);
     volumeSlider.addListener (this);
-
-    // 6. Make it visible on the screen
     addAndMakeVisible (volumeSlider);
+    
+    masterSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
+    masterSlider.setTextBoxStyle (juce::Slider::NoTextBox, false, 0, 0);
+    masterSlider.setRange (0.0f, 1.0f, 0.01f);
+    masterSlider.setValue (audioProcessor.masterVolume);
+    masterSlider.addListener (this);
+    addAndMakeVisible (masterSlider);
 
-    // Set the overall plugin window size (Width, Height in pixels)
+
     setSize (400, 300);
 }
 
@@ -46,15 +43,18 @@ void AudioPluginAudioProcessorEditor::resized()
 {
     // This is generally where you'll want to lay out the positions of any
     // subcomponents in your editor..
-    volumeSlider.setBounds (150, 100, 100, 100);
+    volumeSlider.setBounds (75, 100, 100, 100);
+    masterSlider.setBounds (225, 100, 100, 100);
 }
 
 void AudioPluginAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
 {
-    // Check if the slider that moved is our volume slider
     if (slider == &volumeSlider)
     {
-        // Change the brain's volume variable to match the knob's position!
-        audioProcessor.Volume = volumeSlider.getValue();
+        audioProcessor.DriveAmount = volumeSlider.getValue();
+    }
+    else if (slider == &masterSlider)
+    {
+        audioProcessor.masterVolume = volumeSlider.getValue();
     }
 }

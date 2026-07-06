@@ -150,7 +150,20 @@ void AudioPluginAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer,
         auto* channelData = buffer.getWritePointer (channel);
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample)
         {
-            channelData[sample] *= Volume;
+            float drivenSample = channelData[sample] * DriveAmount;
+
+            if (drivenSample > DriveCeiling)
+        {
+            drivenSample = DriveCeiling;
+        }
+        else if (drivenSample < -DriveCeiling)
+        {
+            drivenSample = -DriveCeiling;
+        }
+
+        channelData[sample] = drivenSample * masterVolume;
+
+
         }
     }
 }

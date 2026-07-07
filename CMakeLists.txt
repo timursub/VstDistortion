@@ -37,3 +37,8 @@ target_link_libraries(AudioPlugin PRIVATE
 # 6. Set modern C++20 standard
 target_compile_features(AudioPlugin PRIVATE cxx_std_20)
 add_compile_definitions(JUCE_VST3_CAN_REPLACE_VST2=0)
+
+# 7. Add your asset files to the project
+juce_add_binary_data(AudioPluginData SOURCES assets/background.jpg)
+target_link_libraries(AudioPlugin PRIVATE AudioPluginData)
+target_include_directories(AudioPlugin PRIVATE "${CMAKE_CURRENT_BINARY_DIR}/juce_binarydata_AudioPluginData/JuceLibraryCode")

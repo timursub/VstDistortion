@@ -1,5 +1,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "BinaryData.h"
 
 //==============================================================================
 AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAudioProcessor& p)
@@ -7,7 +8,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
 {
     volumeSlider.setSliderStyle (juce::Slider::SliderStyle::RotaryHorizontalVerticalDrag);
     volumeSlider.setTextBoxStyle (juce::Slider::NoTextBox, false, 0, 0);
-    volumeSlider.setRange (0.5f, 20.0f, 0.01f);
+    volumeSlider.setRange (0.5f, 15.0f, 0.01f);
     volumeSlider.setValue (audioProcessor.DriveAmount);
     volumeSlider.addListener (this);
     addAndMakeVisible (volumeSlider);
@@ -19,6 +20,7 @@ AudioPluginAudioProcessorEditor::AudioPluginAudioProcessorEditor (AudioPluginAud
     masterSlider.addListener (this);
     addAndMakeVisible (masterSlider);
 
+    backgroundImage = juce::ImageCache::getFromMemory(BinaryData::background_jpg, BinaryData::background_jpgSize);
 
     setSize (400, 300);
 }
@@ -31,10 +33,11 @@ AudioPluginAudioProcessorEditor::~AudioPluginAudioProcessorEditor()
 //==============================================================================
 void AudioPluginAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+   g.drawImageWithin (backgroundImage, 
+                       0, 0, getWidth(), getHeight(), 
+                       juce::RectanglePlacement::stretchToFit);
 
-    g.setColour (juce::Colours::white);
+    g.setColour (juce::Colours::black);
     g.setFont (15.0f);
     g.drawFittedText ("piska!", getLocalBounds(), juce::Justification::centred, 1);
 }
